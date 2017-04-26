@@ -126,3 +126,47 @@ print(fig, '-dpng', 'with_antidote');
 
 
 fprintf('At the end of 35 days there are %.0f humans and %.0f zombies\n', y(end, 1), y(end, 2));
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom solution for killing more zombies
+alpha = 1.5*alpha;
+
+%%%
+% Jacobian with antidote
+Jacobian_2 = @(S, Z) [ -beta.*Z,                -beta.*S + rho
+                       (beta-alpha).*Z - gamma, (beta-alpha).*S - gamma - rho];
+
+%%%
+% plot humans and zombies as direction field
+[S, Z]  = meshgrid(0:(N0/10):N0, 0:(N0/10):N0);
+dS      = @(S, Z) -beta.*Z.*S + rho.*Z;
+dZ      = @(S, Z) (beta - alpha).*Z.*S + gamma.*(N0 - S - Z) - rho.*Z;
+data_ds = dS(S, Z);
+data_dz = dZ(S, Z);
+
+fig = figure; hold on;
+quiver(S, Z, data_ds, data_dz);
+title('Direction Field of Deadlier Humans vs Zombies (with Antidote)');
+xlabel('Humans');
+ylabel('Zombies');
+print(fig, '-dpng', 'deadlier_humans_with_antidote_dirfield');
+
+
+%%%
+% plot humans and zombies as direction field
+fig = figure; hold on;
+tspan  = [0 35];                 % days
+y0     = [49999; 1];
+[t, y] = ode45(@(t, y) szr_with_antidote(t, y, alpha, beta, gamma, rho, N0), tspan, y0);
+plot(t, y(:, 1));                % S
+plot(t, y(:, 2));                % Z
+plot(t, N0 - y(:, 1) - y(:, 2)); % R
+legend('Human population', 'Zombie population', 'Removed population');
+title('Deadly Humans vs Zombie Poulations with Antidote');
+xlabel('Days');
+ylabel('Number of individuals');
+print(fig, '-dpng', 'deadlier_humans_with_antidote');
+
+
+fprintf('At the end of 35 days there are %.0f deadly humans and %.0f zombies\n', y(end, 1), y(end, 2));
