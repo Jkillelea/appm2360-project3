@@ -130,7 +130,7 @@ fprintf('At the end of 35 days there are %.0f humans and %.0f zombies\n', y(end,
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Custom solution for killing more zombies
-alpha = 1.5*alpha;
+alpha = 2*alpha;
 
 %%%
 % Jacobian with antidote
