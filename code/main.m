@@ -67,6 +67,7 @@ xlabel('Days');
 ylabel('Number of individuals');
 print(fig, '-dpng', 'without_antidote');
 
+fprintf('At the end of 35 days there are %.0f humans and %.0f zombies\n', y(end, 1), y(end, 2));
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SZR Model 2
 rho = 0.4;
@@ -122,3 +123,6 @@ title('Human vs Zombie Poulations with Antidote');
 xlabel('Days');
 ylabel('Number of individuals');
 print(fig, '-dpng', 'with_antidote');
+
+
+fprintf('At the end of 35 days there are %.0f humans and %.0f zombies\n', y(end, 1), y(end, 2));
