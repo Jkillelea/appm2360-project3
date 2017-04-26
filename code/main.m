@@ -58,9 +58,10 @@ fig = figure; hold on;
 tspan  = [0 35]; % days
 y0     = [49999; 1];
 [t, y] = ode45(@(t, y) szr(t, y, alpha, beta, gamma, N0), tspan, y0);
-plot(t, y(:, 1));
-plot(t, y(:, 2));
-legend('Human population', 'Zombie population');
+plot(t, y(:, 1)); % S
+plot(t, y(:, 2)); % Z
+plot(t, N0 - y(:, 1) - y(:, 2)); % R
+legend('Human population', 'Zombie population', 'Removed population');
 title('Human vs Zombie Poulations');
 xlabel('Days');
 ylabel('Number of individuals');
@@ -110,12 +111,13 @@ print(fig, '-dpng', 'direction_field_with_antidote');
 %%%
 % plot humans and zombies as direction field
 fig = figure; hold on;
-tspan  = [0 35]; % days
+tspan  = [0 35];                 % days
 y0     = [49999; 1];
 [t, y] = ode45(@(t, y) szr_with_antidote(t, y, alpha, beta, gamma, rho, N0), tspan, y0);
-plot(t, y(:, 1));
-plot(t, y(:, 2));
-legend('Human population', 'Zombie population');
+plot(t, y(:, 1));                % S
+plot(t, y(:, 2));                % Z
+plot(t, N0 - y(:, 1) - y(:, 2)); % R
+legend('Human population', 'Zombie population', 'Removed population');
 title('Human vs Zombie Poulations with Antidote');
 xlabel('Days');
 ylabel('Number of individuals');
